@@ -1,2 +1,2 @@
 # NN
-Neural Net from scratch
+Neural Net from scratch in C++

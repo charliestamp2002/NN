@@ -1,0 +1,2 @@
+/usr/bin/ar qc libnn_lib.a CMakeFiles/nn_lib.dir/src/matrix.cpp.o
+/usr/bin/ranlib libnn_lib.a

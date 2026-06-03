@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/Users/charliestamp/Documents/NN/include
 
 CXX_FLAGSarm64 = -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic
 

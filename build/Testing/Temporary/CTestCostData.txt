@@ -1,0 +1,14 @@
+Default Constructor creates empty matrix 3 0.00239181
+Dimension constructor creates zero-initialized matrix 2 0.00325106
+Dimension constructor with single row 2 0.00319323
+Dimension constructor with single column 2 0.00303077
+Fill constructor initializes all elements to value 2 0.00302023
+Fill constructor with negative value 2 0.00290917
+Fill constructor with zero 2 0.00302279
+Initializer list constructor 2 0.00301025
+Initializer list constructor single row 2 0.00293696
+Initializer list constructor single column 2 0.00291513
+Initializer list constructor 1x1 2 0.00312238
+Initializer list rejects jagged arrays 1 0.00637696
+Element access and modification 2 0.00309827
+---

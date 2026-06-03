@@ -24,6 +24,8 @@ add_library(nn_lib
     src/matrix.cpp
     )
 
+target_include_directories(nn_lib PUBLIC ${CMAKE_SOURCE_DIR}/include)
+
 add_executable(neural_net
     src/main.cpp
     )

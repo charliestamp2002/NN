@@ -1,0 +1,263 @@
+Start testing: Jun 03 16:19 BST
+----------------------------------------------------------
+1/13 Testing: Default Constructor creates empty matrix
+1/13 Test: Default Constructor creates empty matrix
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Default Constructor creates empty matrix"
+Directory: /Users/charliestamp/Documents/NN/build
+"Default Constructor creates empty matrix" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Default Constructor creates empty matrix"
+Randomness seeded to: 1895753972
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Default Constructor creates empty matrix" end time: Jun 03 16:19 BST
+"Default Constructor creates empty matrix" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/13 Testing: Dimension constructor creates zero-initialized matrix
+2/13 Test: Dimension constructor creates zero-initialized matrix
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Dimension constructor creates zero-initialized matrix"
+Directory: /Users/charliestamp/Documents/NN/build
+"Dimension constructor creates zero-initialized matrix" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Dimension constructor creates zero-initialized matrix"
+Randomness seeded to: 3852356682
+===============================================================================
+All tests passed (14 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Dimension constructor creates zero-initialized matrix" end time: Jun 03 16:19 BST
+"Dimension constructor creates zero-initialized matrix" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/13 Testing: Dimension constructor with single row
+3/13 Test: Dimension constructor with single row
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Dimension constructor with single row"
+Directory: /Users/charliestamp/Documents/NN/build
+"Dimension constructor with single row" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Dimension constructor with single row"
+Randomness seeded to: 122507442
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Dimension constructor with single row" end time: Jun 03 16:19 BST
+"Dimension constructor with single row" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/13 Testing: Dimension constructor with single column
+4/13 Test: Dimension constructor with single column
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Dimension constructor with single column"
+Directory: /Users/charliestamp/Documents/NN/build
+"Dimension constructor with single column" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Dimension constructor with single column"
+Randomness seeded to: 2814916516
+===============================================================================
+All tests passed (2 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Dimension constructor with single column" end time: Jun 03 16:19 BST
+"Dimension constructor with single column" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/13 Testing: Fill constructor initializes all elements to value
+5/13 Test: Fill constructor initializes all elements to value
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Fill constructor initializes all elements to value"
+Directory: /Users/charliestamp/Documents/NN/build
+"Fill constructor initializes all elements to value" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Fill constructor initializes all elements to value"
+Randomness seeded to: 2898830748
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Fill constructor initializes all elements to value" end time: Jun 03 16:19 BST
+"Fill constructor initializes all elements to value" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/13 Testing: Fill constructor with negative value
+6/13 Test: Fill constructor with negative value
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Fill constructor with negative value"
+Directory: /Users/charliestamp/Documents/NN/build
+"Fill constructor with negative value" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Fill constructor with negative value"
+Randomness seeded to: 3582436900
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Fill constructor with negative value" end time: Jun 03 16:19 BST
+"Fill constructor with negative value" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/13 Testing: Fill constructor with zero
+7/13 Test: Fill constructor with zero
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Fill constructor with zero"
+Directory: /Users/charliestamp/Documents/NN/build
+"Fill constructor with zero" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Fill constructor with zero"
+Randomness seeded to: 2153671743
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Fill constructor with zero" end time: Jun 03 16:19 BST
+"Fill constructor with zero" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/13 Testing: Initializer list constructor
+8/13 Test: Initializer list constructor
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Initializer list constructor"
+Directory: /Users/charliestamp/Documents/NN/build
+"Initializer list constructor" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Initializer list constructor"
+Randomness seeded to: 4077639592
+===============================================================================
+All tests passed (8 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Initializer list constructor" end time: Jun 03 16:19 BST
+"Initializer list constructor" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/13 Testing: Initializer list constructor single row
+9/13 Test: Initializer list constructor single row
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Initializer list constructor single row"
+Directory: /Users/charliestamp/Documents/NN/build
+"Initializer list constructor single row" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Initializer list constructor single row"
+Randomness seeded to: 3669940909
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Initializer list constructor single row" end time: Jun 03 16:19 BST
+"Initializer list constructor single row" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/13 Testing: Initializer list constructor single column
+10/13 Test: Initializer list constructor single column
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Initializer list constructor single column"
+Directory: /Users/charliestamp/Documents/NN/build
+"Initializer list constructor single column" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Initializer list constructor single column"
+Randomness seeded to: 1719160950
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Initializer list constructor single column" end time: Jun 03 16:19 BST
+"Initializer list constructor single column" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/13 Testing: Initializer list constructor 1x1
+11/13 Test: Initializer list constructor 1x1
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Initializer list constructor 1x1"
+Directory: /Users/charliestamp/Documents/NN/build
+"Initializer list constructor 1x1" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Initializer list constructor 1x1"
+Randomness seeded to: 1283686605
+===============================================================================
+All tests passed (3 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Initializer list constructor 1x1" end time: Jun 03 16:19 BST
+"Initializer list constructor 1x1" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/13 Testing: Initializer list rejects jagged arrays
+12/13 Test: Initializer list rejects jagged arrays
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Initializer list rejects jagged arrays"
+Directory: /Users/charliestamp/Documents/NN/build
+"Initializer list rejects jagged arrays" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Initializer list rejects jagged arrays"
+Randomness seeded to: 826857364
+===============================================================================
+All tests passed (1 assertion in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Initializer list rejects jagged arrays" end time: Jun 03 16:19 BST
+"Initializer list rejects jagged arrays" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/13 Testing: Element access and modification
+13/13 Test: Element access and modification
+Command: "/Users/charliestamp/Documents/NN/build/unit_tests" "Element access and modification"
+Directory: /Users/charliestamp/Documents/NN/build
+"Element access and modification" start time: Jun 03 16:19 BST
+Output:
+----------------------------------------------------------
+Filters: "Element access and modification"
+Randomness seeded to: 3150495954
+===============================================================================
+All tests passed (4 assertions in 1 test case)
+
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"Element access and modification" end time: Jun 03 16:19 BST
+"Element access and modification" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 03 16:19 BST

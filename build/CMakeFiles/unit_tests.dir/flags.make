@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/charliestamp/Documents/NN/build/_deps/catch2-src/src/catch2/.. -I/Users/charliestamp/Documents/NN/build/_deps/catch2-build/generated-includes
+CXX_INCLUDES = -I/Users/charliestamp/Documents/NN/include -I/Users/charliestamp/Documents/NN/build/_deps/catch2-src/src/catch2/.. -I/Users/charliestamp/Documents/NN/build/_deps/catch2-build/generated-includes
 
 CXX_FLAGSarm64 = -std=c++17 -arch arm64 -Wall -Wextra -Wpedantic
 

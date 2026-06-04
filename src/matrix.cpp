@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <stdexcept>
 
 // Default constructor creates an empty matrix with 0 rows and 0 columns
 Matrix::Matrix(): rows_(0), cols_(0), data_(0) 
@@ -48,16 +49,154 @@ Matrix::Matrix(std::initializer_list<std::initializer_list<double>> values) {
             data_[idx++] = val;
         }
     }
+}
 
-    // for (size_t r = 0; r < rows_; r++)
-    // {
-    //     for (size_t c = 0; c < cols_; c++)
-    //     {
-    //         data_[r * cols_ + c] = values.begin()[r].begin()[c];
-    //     }
-    // }  
+// do not return *this here as we are creating an entirely new matrix using addition. I.e. C = A + B
+Matrix Matrix::operator+(const Matrix& other) const {
+
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
+      throw std::invalid_argument("Matrix dimension mismatch");
+    }
+
+    Matrix result(rows_, cols_);
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            result(i, j) = (*this)(i, j) + other(i, j);
+        }
+    }
+
+    return result;
+}
+
+// returning *this allows for chaining of operations as we are changing the current matrix and returning it by reference, e.g. A += B += C
+Matrix& Matrix::operator+=(const Matrix& other) { 
+
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
+      throw std::invalid_argument("Matrix dimension mismatch");
+    }
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            (*this)(i, j) += other(i, j);
+        }
+    }
+
+    return *this;
 
 }
+
+Matrix Matrix::operator-(const Matrix& other) const { 
+
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
+      throw std::invalid_argument("Matrix dimension mismatch");
+    }
+    
+    Matrix result(rows_, cols_);
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            result(i, j) = (*this)(i ,j) - other(i, j);
+        }
+    }
+
+    return result;
+}
+
+Matrix& Matrix::operator-=(const Matrix& other) { 
+
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
+      throw std::invalid_argument("Matrix dimension mismatch");
+    }  
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            (*this)(i, j) -= other(i, j);
+        }
+    }
+
+    return *this;
+}
+
+//  posssibly could be ++i as opposed to i++
+Matrix Matrix::operator*(const Matrix& other) const {
+    if (cols_ != other.rows_) {
+        throw std::invalid_argument("Matrix multiplication error: incompatible dimensions");
+    }
+
+    Matrix result(rows_, other.cols_);
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < other.cols_; j++) {
+
+            double sum = 0.0;
+
+            for (size_t k = 0; k < cols_; k++) { 
+                sum += (*this)(i, k) * other(k, j);
+            }
+
+            result(i, j) = sum;
+        }
+    }
+
+    return result;
+}
+
+Matrix Matrix::operator*(double scalar) const {
+
+    Matrix result(rows_, cols_);
+
+    for (size_t i = 0; i < rows_; i++) { 
+        for (size_t j = 0; j < cols_; j++) {
+            result(i, j) = (*this)(i, j) * scalar;
+        }
+    }
+
+    return result;
+}
+
+Matrix& Matrix::operator*=(double scalar) {
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            (*this)(i, j) = (*this)(i, j) * scalar;
+        }
+    }
+    return *this;
+}
+
+// friend function so no Matrix::... as this is a free function, not a member function
+Matrix operator*(double scalar, const Matrix& m) {
+      return m * scalar;  // Just reuse the member operator
+  }
+
+  Matrix Matrix::transpose() const {
+    Matrix result(cols_, rows_);
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            result(j, i) = (*this)(i, j);
+        }
+    }
+    return result;
+  }
+
+  Matrix Matrix::hadamard(const Matrix& other) const {
+    Matrix result(rows_, cols_);
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+
+            result(i, j) = (*this)(i, j) * other(i, j);
+        }
+    }
+    return result;
+
+  }
+
+
+//  // Matrix * scalar
+//         Matrix operator*(double scalar) const;
+//         Matrix& operator*=(double scalar);
 
 
 

@@ -398,3 +398,283 @@ TEST_CASE("Default Constructor creates empty matrix", "[Matrix][Constructor]") {
       CHECK(c(1, 1) == 10);  // (4+1)*2
   }
 
+
+// ==================== TRANSPOSE ====================
+
+  TEST_CASE("Transpose 2x3 matrix", "[matrix][transpose]") {
+      Matrix a = {{1, 2, 3},
+                  {4, 5, 6}};
+
+      Matrix b = a.transpose();
+
+      REQUIRE(b.getRows() == 3);
+      REQUIRE(b.getCols() == 2);
+
+      CHECK(b(0, 0) == 1);
+      CHECK(b(0, 1) == 4);
+      CHECK(b(1, 0) == 2);
+      CHECK(b(1, 1) == 5);
+      CHECK(b(2, 0) == 3);
+      CHECK(b(2, 1) == 6);
+  }
+
+  TEST_CASE("Transpose square matrix", "[matrix][transpose]") {
+      Matrix a = {{1, 2},
+                  {3, 4}};
+
+      Matrix b = a.transpose();
+
+      REQUIRE(b.getRows() == 2);
+      REQUIRE(b.getCols() == 2);
+
+      CHECK(b(0, 0) == 1);
+      CHECK(b(0, 1) == 3);
+      CHECK(b(1, 0) == 2);
+      CHECK(b(1, 1) == 4);
+  }
+
+  TEST_CASE("Transpose row vector to column vector", "[matrix][transpose]") {
+      Matrix row = {{1, 2, 3, 4}};  // 1x4
+
+      Matrix col = row.transpose();
+
+      REQUIRE(col.getRows() == 4);
+      REQUIRE(col.getCols() == 1);
+
+      CHECK(col(0, 0) == 1);
+      CHECK(col(1, 0) == 2);
+      CHECK(col(2, 0) == 3);
+      CHECK(col(3, 0) == 4);
+  }
+
+  TEST_CASE("Transpose column vector to row vector", "[matrix][transpose]") {
+      Matrix col = {{1}, {2}, {3}};  // 3x1
+
+      Matrix row = col.transpose();
+
+      REQUIRE(row.getRows() == 1);
+      REQUIRE(row.getCols() == 3);
+
+      CHECK(row(0, 0) == 1);
+      CHECK(row(0, 1) == 2);
+      CHECK(row(0, 2) == 3);
+  }
+
+  TEST_CASE("Transpose 1x1 matrix", "[matrix][transpose]") {
+      Matrix a = {{42}};
+
+      Matrix b = a.transpose();
+
+      CHECK(b.getRows() == 1);
+      CHECK(b.getCols() == 1);
+      CHECK(b(0, 0) == 42);
+  }
+
+  TEST_CASE("Double transpose returns original", "[matrix][transpose]") {
+      Matrix a = {{1, 2, 3},
+                  {4, 5, 6}};
+
+      Matrix b = a.transpose().transpose();
+
+      REQUIRE(b.getRows() == a.getRows());
+      REQUIRE(b.getCols() == a.getCols());
+
+      for (size_t i = 0; i < a.getRows(); i++) {
+          for (size_t j = 0; j < a.getCols(); j++) {
+              CHECK(b(i, j) == a(i, j));
+          }
+      }
+  }
+
+  TEST_CASE("Transpose does not modify original", "[matrix][transpose]") {
+      Matrix a = {{1, 2}, {3, 4}};
+
+      Matrix b = a.transpose();
+
+      CHECK(a.getRows() == 2);
+      CHECK(a.getCols() == 2);
+      CHECK(a(0, 1) == 2);  // Still original value
+  }
+
+  TEST_CASE("Transpose property: (A*B)^T = B^T * A^T", "[matrix][transpose]") {
+      Matrix a = {{1, 2},
+                  {3, 4}};
+      Matrix b = {{5, 6},
+                  {7, 8}};
+
+      Matrix left = (a * b).transpose();
+      Matrix right = b.transpose() * a.transpose();
+
+      for (size_t i = 0; i < left.getRows(); i++) {
+          for (size_t j = 0; j < left.getCols(); j++) {
+              CHECK(left(i, j) == right(i, j));
+          }
+      }
+  }
+
+  // ==================== HADAMARD ====================
+
+  TEST_CASE("Hadamard product 2x2", "[matrix][hadamard]") {
+      Matrix a = {{1, 2},
+                  {3, 4}};
+      Matrix b = {{5, 6},
+                  {7, 8}};
+
+      Matrix c = a.hadamard(b);
+
+      REQUIRE(c.getRows() == 2);
+      REQUIRE(c.getCols() == 2);
+
+      CHECK(c(0, 0) == 5);   // 1 * 5
+      CHECK(c(0, 1) == 12);  // 2 * 6
+      CHECK(c(1, 0) == 21);  // 3 * 7
+      CHECK(c(1, 1) == 32);  // 4 * 8
+  }
+
+  TEST_CASE("Hadamard product 2x3", "[matrix][hadamard]") {
+      Matrix a = {{1, 2, 3},
+                  {4, 5, 6}};
+      Matrix b = {{2, 2, 2},
+                  {3, 3, 3}};
+
+      Matrix c = a.hadamard(b);
+
+      CHECK(c(0, 0) == 2);
+      CHECK(c(0, 1) == 4);
+      CHECK(c(0, 2) == 6);
+      CHECK(c(1, 0) == 12);
+      CHECK(c(1, 1) == 15);
+      CHECK(c(1, 2) == 18);
+  }
+
+  TEST_CASE("Hadamard product is commutative", "[matrix][hadamard]") {
+      Matrix a = {{1, 2}, {3, 4}};
+      Matrix b = {{5, 6}, {7, 8}};
+
+      Matrix ab = a.hadamard(b);
+      Matrix ba = b.hadamard(a);
+
+      for (size_t i = 0; i < 2; i++) {
+          for (size_t j = 0; j < 2; j++) {
+              CHECK(ab(i, j) == ba(i, j));
+          }
+      }
+  }
+
+  TEST_CASE("Hadamard with ones is identity", "[matrix][hadamard]") {
+      Matrix a = {{1, 2}, {3, 4}};
+      Matrix ones = {{1, 1}, {1, 1}};
+
+      Matrix c = a.hadamard(ones);
+
+      CHECK(c(0, 0) == 1);
+      CHECK(c(0, 1) == 2);
+      CHECK(c(1, 0) == 3);
+      CHECK(c(1, 1) == 4);
+  }
+
+  TEST_CASE("Hadamard with zeros is zero", "[matrix][hadamard]") {
+      Matrix a = {{1, 2}, {3, 4}};
+      Matrix zeros = {{0, 0}, {0, 0}};
+
+      Matrix c = a.hadamard(zeros);
+
+      CHECK(c(0, 0) == 0);
+      CHECK(c(0, 1) == 0);
+      CHECK(c(1, 0) == 0);
+      CHECK(c(1, 1) == 0);
+  }
+
+  TEST_CASE("Hadamard does not modify operands", "[matrix][hadamard]") {
+      Matrix a = {{1, 2}, {3, 4}};
+      Matrix b = {{5, 6}, {7, 8}};
+
+      Matrix c = a.hadamard(b);
+
+      CHECK(a(0, 0) == 1);
+      CHECK(b(0, 0) == 5);
+  }
+
+  TEST_CASE("Hadamard 1x1 matrix", "[matrix][hadamard]") {
+      Matrix a = {{3}};
+      Matrix b = {{4}};
+
+      Matrix c = a.hadamard(b);
+
+      CHECK(c(0, 0) == 12);
+  }
+
+  TEST_CASE("Hadamard row vectors", "[matrix][hadamard]") {
+      Matrix a = {{1, 2, 3, 4}};
+      Matrix b = {{2, 2, 2, 2}};
+
+      Matrix c = a.hadamard(b);
+
+      REQUIRE(c.getRows() == 1);
+      REQUIRE(c.getCols() == 4);
+
+      CHECK(c(0, 0) == 2);
+      CHECK(c(0, 1) == 4);
+      CHECK(c(0, 2) == 6);
+      CHECK(c(0, 3) == 8);
+  }
+
+  TEST_CASE("Hadamard column vectors", "[matrix][hadamard]") {
+      Matrix a = {{1}, {2}, {3}};
+      Matrix b = {{3}, {3}, {3}};
+
+      Matrix c = a.hadamard(b);
+
+      REQUIRE(c.getRows() == 3);
+      REQUIRE(c.getCols() == 1);
+
+      CHECK(c(0, 0) == 3);
+      CHECK(c(1, 0) == 6);
+      CHECK(c(2, 0) == 9);
+  }
+
+  TEST_CASE("Hadamard with negative values", "[matrix][hadamard]") {
+      Matrix a = {{-1, 2}, {3, -4}};
+      Matrix b = {{2, -3}, {-4, 5}};
+
+      Matrix c = a.hadamard(b);
+
+      CHECK(c(0, 0) == -2);
+      CHECK(c(0, 1) == -6);
+      CHECK(c(1, 0) == -12);
+      CHECK(c(1, 1) == -20);
+  }
+
+  TEST_CASE("Hadamard dimension mismatch throws", "[matrix][hadamard]") {
+      Matrix a(2, 3);
+      Matrix b(2, 4);
+
+      CHECK_THROWS_AS(a.hadamard(b), std::invalid_argument);
+  }
+
+  TEST_CASE("Hadamard dimension mismatch rows throws", "[matrix][hadamard]") {
+      Matrix a(2, 3);
+      Matrix b(3, 3);
+
+      CHECK_THROWS_AS(a.hadamard(b), std::invalid_argument);
+  }
+
+  // ==================== COMBINED USAGE ====================
+
+  TEST_CASE("Transpose and Hadamard together", "[matrix][transpose][hadamard]") {
+      Matrix a = {{1, 2},
+                  {3, 4}};
+      Matrix b = {{1, 3},
+                  {2, 4}};  // This is a^T
+
+      // a^T hadamard b should equal b hadamard a^T
+      Matrix c = a.transpose().hadamard(b);
+
+      CHECK(c(0, 0) == 1);   // 1 * 1
+      CHECK(c(0, 1) == 9);   // 3 * 3
+      CHECK(c(1, 0) == 4);   // 2 * 2
+      CHECK(c(1, 1) == 16);  // 4 * 4
+  }
+
+
+

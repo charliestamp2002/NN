@@ -180,7 +180,12 @@ Matrix operator*(double scalar, const Matrix& m) {
     return result;
   }
 
-  Matrix Matrix::hadamard(const Matrix& other) const {
+Matrix Matrix::hadamard(const Matrix& other) const {
+
+    if (rows_ != other.rows_ || cols_ != other.cols_) {
+        throw std::invalid_argument("Incompatible Dimensions");
+    }
+
     Matrix result(rows_, cols_);
 
     for (size_t i = 0; i < rows_; i++) {
@@ -190,8 +195,73 @@ Matrix operator*(double scalar, const Matrix& m) {
         }
     }
     return result;
-
   }
+
+template<typename Func>
+Matrix Matrix::apply(Func func) const {
+
+    Matrix result(rows_, cols_);
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            result(i, j) = func((*this)(i, j));
+        }
+    }
+
+    return result;
+}
+
+double Matrix::sum() const {
+
+    double total = 0.0;
+
+    for (size_t i = 0; i < rows_; i++) {
+        for (size_t j = 0; j < cols_; j++) {
+            total += (*this)(i, j);
+        }
+    }
+    return total;
+}
+
+Matrix Matrix::sum(int axis) const 
+{
+    
+    if (axis == 0) 
+    {
+       Matrix result(1, cols_);
+
+       for (size_t j = 0; j < cols_, j++) 
+       {
+        double total = 0.0;
+        for (size_t i = 0; i < rows_; i++)
+        {
+            total += (*this)(i, j);
+        }
+        result(0, j) = total;
+       }
+       return result;
+    }
+    else if (axis == 1) 
+    {
+        Matrix result(rows_, 1);
+
+        for (size_t i = 0; i < rows_; i++)
+        {
+            double total = 0.0;
+            for (size_t j = 0; j < cols_; j++)
+            {
+                total += (*this)(i, j);
+            }
+            result(i, j) = total;
+        }
+        return result;
+    }
+    
+    throw std::invalid_argument("axis must be 0 or 1");
+
+}
+
+
 
 
 //  // Matrix * scalar

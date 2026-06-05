@@ -51,6 +51,14 @@ class Matrix {
         // const for both as we do not modify the original matrix, we return a new one
         Matrix transpose() const;
         Matrix hadamard(const Matrix& other) const;
+
+
+        // apply function:
+        template<typename Func>
+        Matrix apply(Func func) const;
+
+        double sum() const;
+        double sum(int axis) const;
 };
 
 #endif // MATRIX_H

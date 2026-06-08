@@ -43,7 +43,7 @@ namespace nn {
 
   // Softmax for output layer (multi-class classification)
   // Converts vector to probability distribution (sums to 1)
-  Matrix softmax(const Matrix& x);
+  Matrix softmax(const Matrix& m);
 
   }  // namespace nn
 #endif

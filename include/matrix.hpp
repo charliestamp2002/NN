@@ -55,10 +55,30 @@ class Matrix {
 
         // apply function:
         template<typename Func>
-        Matrix apply(Func func) const;
+        Matrix apply(Func func) const {
+
+            Matrix result(rows_, cols_);
+
+            for (size_t i = 0; i < rows_; i++) {
+                for (size_t j = 0; j < cols_; j++) {
+                    result(i, j) = func((*this)(i, j));
+                }
+            }
+
+            return result;
+        }
 
         double sum() const;
-        double sum(int axis) const;
+        Matrix sum(int axis) const;      // Sum along axis (0=columns, 1=rows)
+
+        //  STATIC FUNCS: these funcs do not need a this pointer as it does not make sense 
+        // to use a pre-existing matrix to implement these funcs
+
+        static Matrix zeros(size_t rows, size_t cols);
+        static Matrix ones(size_t rows, size_t cols);
+        static Matrix random(size_t rows, size_t cols, double min = -1.0, double max = 1.0);
+        static Matrix randn(size_t rows, size_t cols, double mean = 0.0, double stddev = 1.0);
+
 };
 
 #endif // MATRIX_H

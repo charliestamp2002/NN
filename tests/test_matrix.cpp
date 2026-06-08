@@ -676,5 +676,350 @@ TEST_CASE("Default Constructor creates empty matrix", "[Matrix][Constructor]") {
       CHECK(c(1, 1) == 16);  // 4 * 4
   }
 
+// ==================== SUM (ALL ELEMENTS) ====================
+
+  TEST_CASE("Sum of all elements in matrix", "[matrix][sum]") {
+      Matrix a = {{1, 2, 3},
+                  {4, 5, 6}};
+
+      CHECK(a.sum() == 21);  // 1+2+3+4+5+6
+  }
+
+  TEST_CASE("Sum of matrix with negative values", "[matrix][sum]") {
+      Matrix a = {{-1, 2},
+                  {3, -4}};
+
+      CHECK(a.sum() == 0);  // -1+2+3-4
+  }
+
+  TEST_CASE("Sum of all zeros", "[matrix][sum]") {
+      Matrix a = {{0, 0},
+                  {0, 0}};
+
+      CHECK(a.sum() == 0);
+  }
+
+  TEST_CASE("Sum of 1x1 matrix", "[matrix][sum]") {
+      Matrix a = {{42}};
+
+      CHECK(a.sum() == 42);
+  }
+
+  TEST_CASE("Sum of row vector", "[matrix][sum]") {
+      Matrix a = {{1, 2, 3, 4}};
+
+      CHECK(a.sum() == 10);
+  }
+
+  TEST_CASE("Sum of column vector", "[matrix][sum]") {
+      Matrix a = {{1}, {2}, {3}};
+
+      CHECK(a.sum() == 6);
+  }
+
+  TEST_CASE("Sum with floating point values", "[matrix][sum]") {
+      Matrix a = {{1.5, 2.5},
+                  {3.0, 4.0}};
+
+      CHECK(a.sum() == 11.0);
+  }
+
+  // ==================== SUM ALONG AXIS ====================
+
+  TEST_CASE("Sum along axis 0 (collapse rows)", "[matrix][sum]") {
+      Matrix a = {{1, 2, 3},
+                  {4, 5, 6}};
+
+      Matrix result = a.sum(0);  // Sum down columns
+
+      REQUIRE(result.getRows() == 1);
+      REQUIRE(result.getCols() == 3);
+
+      CHECK(result(0, 0) == 5);  // 1+4
+      CHECK(result(0, 1) == 7);  // 2+5
+      CHECK(result(0, 2) == 9);  // 3+6
+  }
+
+  TEST_CASE("Sum along axis 1 (collapse columns)", "[matrix][sum]") {
+      Matrix a = {{1, 2, 3},
+                  {4, 5, 6}};
+
+      Matrix result = a.sum(1);  // Sum across rows
+
+      REQUIRE(result.getRows() == 2);
+      REQUIRE(result.getCols() == 1);
+
+      CHECK(result(0, 0) == 6);   // 1+2+3
+      CHECK(result(1, 0) == 15);  // 4+5+6
+  }
+
+  TEST_CASE("Sum along axis 0 with negatives", "[matrix][sum]") {
+      Matrix a = {{1, -2},
+                  {3, 4},
+                  {-5, 6}};
+
+      Matrix result = a.sum(0);
+
+      REQUIRE(result.getRows() == 1);
+      REQUIRE(result.getCols() == 2);
+
+      CHECK(result(0, 0) == -1);  // 1+3-5
+      CHECK(result(0, 1) == 8);   // -2+4+6
+  }
+
+  TEST_CASE("Sum along axis 1 single column", "[matrix][sum]") {
+      Matrix a = {{5},
+                  {10},
+                  {15}};
+
+      Matrix result = a.sum(1);
+
+      REQUIRE(result.getRows() == 3);
+      REQUIRE(result.getCols() == 1);
+
+      CHECK(result(0, 0) == 5);
+      CHECK(result(1, 0) == 10);
+      CHECK(result(2, 0) == 15);
+  }
+
+  TEST_CASE("Sum along axis 0 single row", "[matrix][sum]") {
+      Matrix a = {{1, 2, 3, 4}};
+
+      Matrix result = a.sum(0);
+
+      REQUIRE(result.getRows() == 1);
+      REQUIRE(result.getCols() == 4);
+
+      CHECK(result(0, 0) == 1);
+      CHECK(result(0, 1) == 2);
+      CHECK(result(0, 2) == 3);
+      CHECK(result(0, 3) == 4);
+  }
+
+  // ==================== STATIC: ZEROS ====================
+
+  TEST_CASE("Create zeros matrix", "[matrix][static]") {
+      Matrix a = Matrix::zeros(3, 4);
+
+      REQUIRE(a.getRows() == 3);
+      REQUIRE(a.getCols() == 4);
+
+      for (size_t i = 0; i < 3; i++) {
+          for (size_t j = 0; j < 4; j++) {
+              CHECK(a(i, j) == 0.0);
+          }
+      }
+  }
+
+  TEST_CASE("Create zeros 1x1", "[matrix][static]") {
+      Matrix a = Matrix::zeros(1, 1);
+
+      CHECK(a(0, 0) == 0.0);
+  }
+
+  // ==================== STATIC: ONES ====================
+
+  TEST_CASE("Create ones matrix", "[matrix][static]") {
+      Matrix a = Matrix::ones(2, 3);
+
+      REQUIRE(a.getRows() == 2);
+      REQUIRE(a.getCols() == 3);
+
+      for (size_t i = 0; i < 2; i++) {
+          for (size_t j = 0; j < 3; j++) {
+              CHECK(a(i, j) == 1.0);
+          }
+      }
+  }
+
+  TEST_CASE("Create ones column vector", "[matrix][static]") {
+      Matrix a = Matrix::ones(5, 1);
+
+      REQUIRE(a.getRows() == 5);
+      REQUIRE(a.getCols() == 1);
+
+      for (size_t i = 0; i < 5; i++) {
+          CHECK(a(i, 0) == 1.0);
+      }
+  }
+
+  // ==================== STATIC: RANDOM (UNIFORM) ====================
+
+  TEST_CASE("Random matrix has correct dimensions", "[matrix][static]") {
+      Matrix a = Matrix::random(3, 4);
+
+      CHECK(a.getRows() == 3);
+      CHECK(a.getCols() == 4);
+  }
+
+  TEST_CASE("Random matrix values in range", "[matrix][static]") {
+      Matrix a = Matrix::random(10, 10, 0.0, 1.0);
+
+      for (size_t i = 0; i < 10; i++) {
+          for (size_t j = 0; j < 10; j++) {
+              CHECK(a(i, j) >= 0.0);
+              CHECK(a(i, j) <= 1.0);
+          }
+      }
+  }
+
+  TEST_CASE("Random matrix with custom range", "[matrix][static]") {
+      Matrix a = Matrix::random(5, 5, -2.0, 2.0);
+
+      for (size_t i = 0; i < 5; i++) {
+          for (size_t j = 0; j < 5; j++) {
+              CHECK(a(i, j) >= -2.0);
+              CHECK(a(i, j) <= 2.0);
+          }
+      }
+  }
+
+  TEST_CASE("Random matrix produces different values", "[matrix][static]") {
+      Matrix a = Matrix::random(10, 10, 0.0, 1.0);
+
+      // Count unique values (should have many)
+      bool has_different_values = false;
+      double first = a(0, 0);
+
+      for (size_t i = 0; i < 10; i++) {
+          for (size_t j = 0; j < 10; j++) {
+              if (a(i, j) != first) {
+                  has_different_values = true;
+                  break;
+              }
+          }
+          if (has_different_values) break;
+      }
+
+      CHECK(has_different_values);  // Very unlikely all values are identical
+  }
+
+  TEST_CASE("Random generates different matrices on successive calls", "[matrix][static]") {
+      Matrix a = Matrix::random(3, 3);
+      Matrix b = Matrix::random(3, 3);
+
+      // At least one element should differ
+      bool different = false;
+      for (size_t i = 0; i < 3; i++) {
+          for (size_t j = 0; j < 3; j++) {
+              if (a(i, j) != b(i, j)) {
+                  different = true;
+                  break;
+              }
+          }
+          if (different) break;
+      }
+
+      CHECK(different);
+  }
+
+  // ==================== STATIC: RANDN (GAUSSIAN) ====================
+
+  TEST_CASE("Randn matrix has correct dimensions", "[matrix][static]") {
+      Matrix a = Matrix::randn(3, 4);
+
+      CHECK(a.getRows() == 3);
+      CHECK(a.getCols() == 4);
+  }
+
+  TEST_CASE("Randn produces distribution around mean", "[matrix][static]") {
+      Matrix a = Matrix::randn(100, 100, 5.0, 0.1);  // Mean=5, small stddev
+
+      double sum = a.sum();
+      double avg = sum / (100 * 100);
+
+      // Average should be close to 5.0 with large sample
+      CHECK(avg >= 4.8);
+      CHECK(avg <= 5.2);
+  }
+
+  TEST_CASE("Randn produces different values", "[matrix][static]") {
+      Matrix a = Matrix::randn(10, 10);
+
+      bool has_different_values = false;
+      double first = a(0, 0);
+
+      for (size_t i = 0; i < 10; i++) {
+          for (size_t j = 0; j < 10; j++) {
+              if (a(i, j) != first) {
+                  has_different_values = true;
+                  break;
+              }
+          }
+          if (has_different_values) break;
+      }
+
+      CHECK(has_different_values);
+  }
+
+  TEST_CASE("Randn standard normal centered at zero", "[matrix][static]") {
+      Matrix a = Matrix::randn(100, 100, 0.0, 1.0);
+
+      double avg = a.sum() / (100 * 100);
+
+      // Should be approximately 0 with large sample
+      CHECK(avg >= -0.2);
+      CHECK(avg <= 0.2);
+  }
+
+  TEST_CASE("Randn generates different matrices on successive calls", "[matrix][static]") {
+      Matrix a = Matrix::randn(3, 3);
+      Matrix b = Matrix::randn(3, 3);
+
+      bool different = false;
+      for (size_t i = 0; i < 3; i++) {
+          for (size_t j = 0; j < 3; j++) {
+              if (a(i, j) != b(i, j)) {
+                  different = true;
+                  break;
+              }
+          }
+          if (different) break;
+      }
+
+      CHECK(different);
+  }
+
+//   // ==================== STATIC: IDENTITY ====================
+
+//   TEST_CASE("Identity matrix 3x3", "[matrix][static]") {
+//       Matrix I = Matrix::identity(3);
+
+//       REQUIRE(I.getRows() == 3);
+//       REQUIRE(I.getCols() == 3);
+
+//       // Diagonal should be 1
+//       CHECK(I(0, 0) == 1);
+//       CHECK(I(1, 1) == 1);
+//       CHECK(I(2, 2) == 1);
+
+//       // Off-diagonal should be 0
+//       CHECK(I(0, 1) == 0);
+//       CHECK(I(0, 2) == 0);
+//       CHECK(I(1, 0) == 0);
+//       CHECK(I(1, 2) == 0);
+//       CHECK(I(2, 0) == 0);
+//       CHECK(I(2, 1) == 0);
+//   }
+
+//   TEST_CASE("Identity 1x1", "[matrix][static]") {
+//       Matrix I = Matrix::identity(1);
+
+//       CHECK(I(0, 0) == 1);
+//   }
+
+//   TEST_CASE("Matrix multiplication with identity", "[matrix][static]") {
+//       Matrix a = {{1, 2},
+//                   {3, 4}};
+//       Matrix I = Matrix::identity(2);
+
+//       Matrix b = a * I;
+
+//       // Should equal original
+//       CHECK(b(0, 0) == 1);
+//       CHECK(b(0, 1) == 2);
+//       CHECK(b(1, 0) == 3);
+//       CHECK(b(1, 1) == 4);
+//   }
 
 

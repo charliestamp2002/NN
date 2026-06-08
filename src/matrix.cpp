@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <stdexcept>
+#include <random>
 
 // Default constructor creates an empty matrix with 0 rows and 0 columns
 Matrix::Matrix(): rows_(0), cols_(0), data_(0) 
@@ -197,19 +198,6 @@ Matrix Matrix::hadamard(const Matrix& other) const {
     return result;
   }
 
-template<typename Func>
-Matrix Matrix::apply(Func func) const {
-
-    Matrix result(rows_, cols_);
-
-    for (size_t i = 0; i < rows_; i++) {
-        for (size_t j = 0; j < cols_; j++) {
-            result(i, j) = func((*this)(i, j));
-        }
-    }
-
-    return result;
-}
 
 double Matrix::sum() const {
 
@@ -230,7 +218,7 @@ Matrix Matrix::sum(int axis) const
     {
        Matrix result(1, cols_);
 
-       for (size_t j = 0; j < cols_, j++) 
+       for (size_t j = 0; j < cols_; j++) 
        {
         double total = 0.0;
         for (size_t i = 0; i < rows_; i++)
@@ -252,21 +240,57 @@ Matrix Matrix::sum(int axis) const
             {
                 total += (*this)(i, j);
             }
-            result(i, j) = total;
+            result(i, 0) = total;
         }
         return result;
     }
-    
+
     throw std::invalid_argument("axis must be 0 or 1");
 
 }
 
+// STATIC FUNCS
+
+Matrix Matrix::zeros(size_t rows, size_t cols) {
+    return Matrix(rows, cols);
+}
+
+Matrix Matrix::ones(size_t rows, size_t cols) {
+    return Matrix(rows, cols, 1.0);
+}
+
+Matrix Matrix::random(size_t rows, size_t cols, double min, double max) {
+      Matrix result(rows, cols);
+
+      // Random number generator
+      static std::random_device rd;
+      static std::mt19937 gen(rd());
+      std::uniform_real_distribution<double> dist(min, max);
+
+      for (size_t i = 0; i < result.data_.size(); i++) {
+          result.data_[i] = dist(gen);
+      }
+
+      return result;
+  }
+
+  Matrix Matrix::randn(size_t rows, size_t cols, double mean, double stddev) {
+      Matrix result(rows, cols);
+
+      // Random number generator
+      static std::random_device rd;
+      static std::mt19937 gen(rd());
+      std::normal_distribution<double> dist(mean, stddev);
+
+      for (size_t i = 0; i < result.data_.size(); i++) {
+          result.data_[i] = dist(gen);
+      }
+
+      return result;
+  }
 
 
 
-//  // Matrix * scalar
-//         Matrix operator*(double scalar) const;
-//         Matrix& operator*=(double scalar);
 
 
 

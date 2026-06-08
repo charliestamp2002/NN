@@ -55,9 +55,83 @@ DenseLayer::DenseLayer(size_t input_size, size_t output_size, ActivationType act
             default:
                 throw std::invalid_argument("Unknown activation type");
         }
-
-         
     }
+
+
+Matrix DenseLayer::forward(const Matrix& input) {
+
+    if (input.getCols() != input_size_) {
+        throw std::invalid_argument("number of weights do not equal input size");
+    }
+
+    //  Linear Transformation: Z = X.W
+    // input dim: batch_size x input_size
+    // weights dim input_size x output_size
+    // output dim (Z): batch_size x output_size
+
+    Matrix z = input * weights_;
+    // Z = X.W + b
+    // bias dim: (1 x output_size) i.e. 1 row 
+    // add bias: Broadcast bias to every 
+
+    for (size_t i = 0; i < z.getRows(); i++) {
+        for (size_t j = 0; j < z.getCols(); j++) {
+            z(i, j) += biases_(0, j);
+        }
+    }
+
+    // apply activation once biases added:
+    Matrix a = z.apply(activation_);
+
+    // cache outputs:
+    last_input_ = input;
+    last_z_ = z;
+    last_a_ = a;
+
+    return a;
+}
+
+size_t DenseLayer::input_size() const {
+    return input_size_;
+}
+
+size_t DenseLayer::output_size() const {
+    return output_size_;
+}
+
+const Matrix& DenseLayer::weights() const {
+    return weights_;
+}
+
+const Matrix& DenseLayer::biases() const {
+    return biases_;
+}
+
+const Matrix& DenseLayer::last_input() const {
+    return last_input_;
+}
+
+const Matrix& DenseLayer::last_z() const {
+    return last_z_;
+}
+
+const Matrix& DenseLayer::last_a() const {
+    return last_a_;
+}
+
+void DenseLayer::set_weights(const Matrix& weights) {
+    if (weights.getRows() != input_size_ || weights.getCols() != output_size_) {
+        throw std::invalid_argument("Weight dimensions don't match layer dimensions");
+    }
+    weights_ = weights;
+}
+
+void DenseLayer::set_biases(const Matrix& biases) {
+    if (biases.getRows() != 1 || biases.getCols() != output_size_) {
+        throw std::invalid_argument("Bias dimensions don't match layer dimensions");
+    }
+    biases_ = biases;
+}
 
 
 
